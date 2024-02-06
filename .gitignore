@@ -1,0 +1,20 @@
+mysql_data/
+
+# Ignore database
+db.sqlite3
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore static files folder
+static/
+
+# Ignore media files folder
+media/
+
+# Ignore Python bytecode (pyc) and cache folders
+*.pyc
+__pycache__/
+

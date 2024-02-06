@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block Header %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="user-details">
+                <img src="{{user.profile_img.url}}" alt="{{user.username}}" width="64" height="64"
+                    class="rounded-circle">
+                <h5>{{user.username}}</h5>
+                <p>{{user.bio}}</p>
+                <p class="text-muted">
+                    <small>Total likes: {{ total_like.sum_likes }}</small>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<!-- Add tabs for Photos and Likes -->
+<ul class="nav nav-tabs" id="myTabs">
+    <li class="nav-item">
+        <a class="nav-link active" id="photos-tab" data-bs-toggle="tab" href="#photos" role="tab" aria-controls="photos"
+            aria-selected="true">Photos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="likes-tab" data-bs-toggle="tab" href="#likes" role="tab" aria-controls="likes"
+            aria-selected="false">Likes</a>
+    </li>
+</ul>
+<!-- Tab content -->
+<div class="tab-content" id="myTabsContent" style="margin-top: 20px;">
+    <div class="tab-pane fade show active" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+            {% for post in posts %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{ post.post_img.url }}" class="bd-placeholder-img card-img-top" alt="{{ post.desc }}">
+                    <a href="{% url 'delete-post' post.id %}" class="top-right-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                        </svg>
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                    <small class="fade-like-count">{{ post.likes.count }} Like</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="likes" role="tabpanel" aria-labelledby="likes-tab">
+        <!-- Content for the "Likes" tab -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+            {% for like in likes %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{ like.post.post_img.url }}" class="bd-placeholder-img card-img-top"
+                        alt="{{ like.post.desc }}">
+                    <div class="details-overlay">
+                        <div class="overlay-content">
+                            <a href="#" class="download-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-download" viewBox="0 0 16 16">
+                                    <path
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                    <path
+                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                </svg>
+                                <i class="bi bi-download"></i>
+                            </a>
+                            <a href="{% url 'like' like.post.id %}" class="like-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                                </svg>
+                                <i class="bi bi-heart-fill"></i>
+                            </a>
+                            <div class="user-info">
+                                <img src="{{like.post.user.profile_img.url}}" alt="{{post.user.username}}" width="32"
+                                    height="32" class="rounded-circle">
+                                <small style="color: white;"><a href="{% url 'profile' like.post.user.id %}"
+                                        style="text-decoration: none;color: white;">{{ like.post.user.username}}</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card:hover .top-right-link {
+        opacity: 1;
+    }
+    .card:hover .fade-like-count{
+        opacity: 1;
+    }
+
+    .top-right-link {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        color: #333;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .fade-like-count{
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+</style>
+{% endblock %}
