@@ -16,15 +16,8 @@ Wallpaper4u is a Django-based web application for sharing and managing wallpaper
     cd wallpaper4u
     ```
 
-2. Configure Environment Variables:
 
-    ```bash
-    cp .env.example .env
-    ```
-
-    Edit the `.env` file with your configurations, such as database settings and secret key.
-
-3. Build and Run the Docker Containers:
+2. Build and Run the Docker Containers:
 
     ```bash
     docker-compose up --build
@@ -32,13 +25,13 @@ Wallpaper4u is a Django-based web application for sharing and managing wallpaper
 
     Visit [http://localhost:8000/](http://localhost:8000/) in your web browser to access the Wallpaper4u application.
 
-4. Apply Migrations:
+3. Apply Migrations:
 
     ```bash
     docker-compose exec web python manage.py migrate
     ```
 
-5. Create a Superuser (Optional):
+4. Create a Superuser (Optional):
 
     ```bash
     docker-compose exec web python manage.py createsuperuser
