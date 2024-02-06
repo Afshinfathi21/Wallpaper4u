@@ -12,7 +12,7 @@ Wallpaper4u is a Django-based web application for sharing and managing wallpaper
 1. Clone the Repository:
 
     ```bash
-    git clone https://github.com/your-username/wallpaper4u.git
+    git clone https://github.com/Afshinfathi21/Wallpaper4u.git
     cd wallpaper4u
     ```
 
