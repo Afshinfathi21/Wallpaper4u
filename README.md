@@ -41,7 +41,7 @@ Wallpaper4u is a Django-based web application for sharing and managing wallpaper
 
 - Access the application at [http://localhost:8000/](http://localhost:8000/).
 - Register or log in.
-- Update your profile, upload wallpapers, like, and manage posts.
+- Create your profile, upload wallpapers, like, and manage posts.
 - Confirm your email address after registration.
 
 ## Docker Commands
